@@ -1,0 +1,44 @@
+<template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Modal title</h4>
+  </div>
+  <div class="modal-body">
+    <form *ngIf="active" (ngSubmit)="onSubmit(model)" #userForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="userName">Name</label>
+        <input type="text" class="form-control" id="userName"
+               required
+               [(ngModel)]="model.userName" name="userName"
+               #userName="ngModel" >
+        <div [hidden]="userName.valid || userName.pristine" 
+             class="alert alert-danger">
+          Name is required
+        </div>
+        <label for="userEmail">Email</label>
+        <input type="email" class="form-control" id="userEmail"
+               required
+               [(ngModel)]="model.userEmail" name="userEmail"
+               #userEmail="ngModel" >
+        <div [hidden]="userEmail.valid || userEmail.pristine" 
+             class="alert alert-danger">
+          Email is required
+        </div>
+      </div>
+      <button type="submit" class="btn btn-default" [disabled]="!userForm.form.valid">Submit</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+  </div>
+</template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+<hr>
+
+<pre>{{closeResult}}</pre>
+<pre>{{model.userName}}</pre>
+<pre>{{model.userEmail}}</pre>
